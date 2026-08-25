@@ -9,8 +9,8 @@ export default defineConfig({
 	devToolbar: { enabled: false },
 	integrations: [
 		starlight({
-			title: 'Dev Books',
-			description: 'หนังสือ Programming ออนไลน์สำหรับ Developer',
+			title: 'Dev Books Template',
+			description: 'เทมเพลตหนังสือ Programming ออนไลน์สำหรับ Developer',
 			favicon: '/favicon.svg',
 			locales: {
 				root: {
@@ -25,16 +25,16 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'หนังสือ',
+					label: 'หนังสือตัวอย่าง',
 					items: [
-						{ label: 'C# สำหรับ Developer', slug: 'csharp' },
-						{ label: 'TypeScript สำหรับ Developer', slug: 'typescript' },
-						{ label: 'Python สำหรับ Developer', slug: 'python' },
+						{ label: 'ภาพรวม', slug: 'example' },
+						{ label: 'บทที่ 1: บทเรียนตัวอย่าง', slug: 'example/chapter' },
+						{ label: 'โปรเจกต์ตัวอย่าง', slug: 'example/project' },
 					],
 				},
 				{
-					label: 'โครงการ',
-					items: [{ label: 'เกี่ยวกับ', slug: 'about' }],
+					label: 'Template',
+					items: [{ label: 'เกี่ยวกับ Template', slug: 'about' }],
 				},
 			],
 		}),

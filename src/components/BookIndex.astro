@@ -2,15 +2,30 @@
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 
 const books = [
-	{ number: '01', title: 'C# สำหรับ Developer', href: `${base}csharp/` },
-	{ number: '02', title: 'TypeScript สำหรับ Developer', href: `${base}typescript/` },
-	{ number: '03', title: 'Python สำหรับ Developer', href: `${base}python/` },
+	{
+		number: '01',
+		title: 'ภาพรวมหนังสือตัวอย่าง',
+		status: 'โครงสร้างและแนวทางปรับแต่ง',
+		href: `${base}example/`,
+	},
+	{
+		number: '02',
+		title: 'บทที่ 1: บทเรียนตัวอย่าง',
+		status: 'แนวคิด โค้ด และแบบฝึกหัด',
+		href: `${base}example/chapter/`,
+	},
+	{
+		number: '03',
+		title: 'โปรเจกต์ตัวอย่าง',
+		status: 'โจทย์ฝึกปฏิบัติปลายบท',
+		href: `${base}example/project/`,
+	},
 ];
 ---
 
 <div class="book-index not-content">
 	<section id="books" aria-labelledby="books-title">
-		<h2 id="books-title">หนังสือในชุด</h2>
+		<h2 id="books-title">เนื้อหาตัวอย่าง</h2>
 		<ol>
 			{
 				books.map((book) => (
@@ -18,7 +33,7 @@ const books = [
 						<a href={book.href}>
 							<span class="book-number">{book.number}</span>
 							<strong>{book.title}</strong>
-							<span class="book-status">กำลังวางแผนเนื้อหา</span>
+							<span class="book-status">{book.status}</span>
 							<svg viewBox="0 0 24 24" aria-hidden="true">
 								<path d="m9 5 7 7-7 7" />
 							</svg>
@@ -29,7 +44,7 @@ const books = [
 		</ol>
 	</section>
 
-	<footer>Dev Books</footer>
+	<footer>Dev Books Template</footer>
 </div>
 
 <style>

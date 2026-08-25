@@ -1,6 +1,6 @@
 # Dev Books Template
 
-โครงเริ่มต้นสำหรับหนังสือ Programming ออนไลน์ สร้างด้วย Astro และ Starlight
+โครงเริ่มต้นสำหรับหนังสือ Programming ออนไลน์ สร้างด้วย Astro และ Starlight พร้อมเนื้อหาตัวอย่างที่สามารถแทนที่ด้วยหนังสือจริงได้
 
 ## เริ่มใช้งาน
 
@@ -16,13 +16,22 @@ npm run dev
 ```text
 src/content/docs/
 ├── index.mdx
-├── csharp/
-├── typescript/
-├── python/
+├── example/
+│   ├── index.md
+│   ├── chapter.md
+│   └── project.md
 └── about.md
 ```
 
-เมื่อตัดสินใจว่าจะเริ่มหนังสือเล่มใด ให้เพิ่มไฟล์ `.md` หรือ `.mdx` ในโฟลเดอร์ของหนังสือเล่มนั้น แล้วเพิ่มบทใหม่เข้า sidebar ใน `astro.config.mjs`
+ไฟล์ใน `example/` เป็นเพียงตัวอย่าง เมื่อต้องการเริ่มหนังสือจริงให้เปลี่ยนชื่อโฟลเดอร์และแทนที่เนื้อหาภายในด้วยไฟล์ `.md` หรือ `.mdx` ของคุณ
+
+## ปรับเป็นหนังสือของคุณ
+
+1. เปลี่ยนชื่อและคำอธิบายใน `astro.config.mjs`
+2. เปลี่ยนโฟลเดอร์ `src/content/docs/example/` เป็น slug ของหนังสือ
+3. แก้รายการหน้าแรกใน `src/components/BookIndex.astro`
+4. จัดลำดับบทใน `sidebar` ของ `astro.config.mjs`
+5. หากสร้าง GitHub repository ใหม่ ให้แก้ค่า `site` และ `base` ใน `astro.config.mjs`
 
 ## คำสั่ง
 
