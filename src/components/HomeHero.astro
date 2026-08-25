@@ -1,0 +1,293 @@
+<section class="home-hero not-content" aria-labelledby="home-title">
+	<div class="hero-copy">
+		<h1 id="home-title">หนังสือ Programming<br />สำหรับ Developer</h1>
+		<p>เรียนรู้ผ่านแนวคิด ตัวอย่างโค้ด และโปรเจกต์ที่นำไปใช้ได้จริง</p>
+		<a class="primary-action" href="#books">
+			<span>ดูหนังสือทั้งหมด</span>
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path d="M5 12h14M13 6l6 6-6 6" />
+			</svg>
+		</a>
+	</div>
+
+	<figure class="code-window" aria-label="ตัวอย่างหน้าต่างเขียนโปรแกรม TypeScript">
+		<div class="explorer">
+			<span class="explorer-title">EXPLORER</span>
+			<span class="tree root">dev-books</span>
+			<span class="tree folder">src</span>
+			<span class="tree file active">index.ts</span>
+			<span class="tree file">utils.ts</span>
+			<span class="tree readme">README.md</span>
+		</div>
+
+		<div class="editor">
+			<div class="editor-tab"><span>TS</span> index.ts</div>
+			<div class="code-lines" aria-hidden="true">
+				<div><span class="line-number">1</span><code><b>export function</b> greet(name: <i>string</i>): <i>string</i> {'{'}</code></div>
+				<div><span class="line-number">2</span><code>&nbsp;&nbsp;<b>const</b> message = <em>`สวัสดี, $&#123;name&#125;!`</em>;</code></div>
+				<div><span class="line-number">3</span><code>&nbsp;&nbsp;<b>return</b> message;</code></div>
+				<div><span class="line-number">4</span><code>{'}'}</code></div>
+				<div><span class="line-number">5</span><code></code></div>
+				<div><span class="line-number">6</span><code>greet(<em>'Developer'</em>);</code></div>
+				<div><span class="line-number">7</span><code></code></div>
+				<div><span class="line-number">8</span><code class="comment">// แนวคิดสำคัญ</code></div>
+				<div><span class="line-number">9</span><code class="comment">// เขียนโค้ดที่อ่านง่าย ทดสอบได้ และนำไปใช้ได้จริง</code></div>
+			</div>
+			<div class="status-bar"><span>Ln 6, Col 17</span><span>UTF-8</span><span>TypeScript</span></div>
+		</div>
+	</figure>
+</section>
+
+<style>
+	.home-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 0.95fr) minmax(34rem, 1.05fr);
+		align-items: center;
+		gap: clamp(2.25rem, 3.5vw, 3.5rem);
+		padding: clamp(3.5rem, 5vw, 4rem) 0 clamp(3rem, 5vw, 4rem);
+	}
+
+	.hero-copy h1 {
+		margin: 0;
+		max-width: none;
+		font-size: clamp(3.25rem, 4.2vw, 3.75rem);
+		font-weight: 750;
+		line-height: 1.18;
+		letter-spacing: -0.045em;
+		color: var(--sl-color-white);
+	}
+
+	.hero-copy p {
+		max-width: 35rem;
+		margin: 1.65rem 0 0;
+		font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+		line-height: 1.7;
+		color: var(--sl-color-gray-3);
+	}
+
+	.primary-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 1.5rem;
+		margin-top: 2.15rem;
+		border-radius: 0.45rem;
+		padding: 0.95rem 1.5rem;
+		background: var(--sl-color-accent);
+		color: #fff;
+		font-size: 1rem;
+		font-weight: 650;
+		text-decoration: none;
+		transition: background-color 160ms ease, transform 160ms ease;
+	}
+
+	.primary-action:hover,
+	.primary-action:focus-visible {
+		background: #0649d8;
+		color: #fff;
+		transform: translateY(-2px);
+	}
+
+	.primary-action svg {
+		width: 1.25rem;
+		height: 1.25rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.8;
+	}
+
+	.code-window {
+		display: grid;
+		grid-template-columns: 10.25rem 1fr;
+		min-height: 24.5rem;
+		margin: 0;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.7rem;
+		background: var(--sl-color-bg);
+		overflow: hidden;
+		box-shadow: 0 1.2rem 4rem rgb(18 32 62 / 7%);
+	}
+
+	.explorer {
+		display: flex;
+		flex-direction: column;
+		border-inline-end: 1px solid var(--sl-color-gray-5);
+		padding: 1.2rem 0;
+		background: color-mix(in srgb, var(--sl-color-bg) 96%, var(--sl-color-accent) 4%);
+		font-family: var(--__sl-font-mono);
+		font-size: 0.76rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.explorer-title {
+		padding: 0 1rem 0.9rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+
+	.tree {
+		position: relative;
+		padding: 0.43rem 0.75rem 0.43rem 2rem;
+	}
+
+	.tree::before {
+		position: absolute;
+		inset: 0.6rem auto auto 0.85rem;
+		width: 0.65rem;
+		height: 0.48rem;
+		border: 1px solid currentColor;
+		border-radius: 1px;
+		content: '';
+		opacity: 0.72;
+	}
+
+	.tree.folder,
+	.tree.file {
+		padding-inline-start: 2.65rem;
+	}
+
+	.tree.folder::before,
+	.tree.file::before {
+		inset-inline-start: 1.5rem;
+	}
+
+	.tree.file::before {
+		border: 0;
+		content: 'TS';
+		inset-block-start: 0.45rem;
+		width: auto;
+		height: auto;
+		color: var(--sl-color-accent);
+		font-size: 0.68rem;
+		font-weight: 700;
+		opacity: 1;
+	}
+
+	.tree.readme::before {
+		border-radius: 50%;
+	}
+
+	.tree.active {
+		background: var(--sl-color-gray-6);
+		color: var(--sl-color-white);
+	}
+
+	.editor {
+		position: relative;
+		display: grid;
+		grid-template-rows: 3.1rem 1fr 2.6rem;
+		min-width: 0;
+	}
+
+	.editor-tab {
+		align-self: stretch;
+		width: 10.5rem;
+		border-inline-end: 1px solid var(--sl-color-gray-5);
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		padding: 0.9rem 1rem;
+		font-family: var(--__sl-font-mono);
+		font-size: 0.78rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.editor-tab span {
+		margin-inline-end: 0.6rem;
+		color: var(--sl-color-accent);
+		font-weight: 700;
+	}
+
+	.code-lines {
+		padding: 1.2rem 1rem;
+		overflow: hidden;
+	}
+
+	.code-lines > div {
+		display: grid;
+		grid-template-columns: 2.3rem minmax(max-content, 1fr);
+		min-height: 1.75rem;
+		font-family: var(--__sl-font-mono);
+		font-size: clamp(0.72rem, 1vw, 0.84rem);
+		line-height: 1.7;
+		white-space: nowrap;
+	}
+
+	.line-number {
+		color: var(--sl-color-gray-4);
+		user-select: none;
+	}
+
+	.code-lines code {
+		padding: 0;
+		background: transparent;
+		color: var(--sl-color-white);
+	}
+
+	.code-lines b {
+		color: var(--sl-color-accent);
+		font-weight: 650;
+	}
+
+	.code-lines i,
+	.code-lines .comment {
+		color: #16803b;
+		font-style: normal;
+	}
+
+	.code-lines em {
+		color: #c5343b;
+		font-style: normal;
+	}
+
+	.status-bar {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 1.25rem;
+		border-top: 1px solid var(--sl-color-gray-5);
+		padding: 0 1rem;
+		font-family: var(--__sl-font-mono);
+		font-size: 0.7rem;
+		color: var(--sl-color-gray-3);
+	}
+
+	.status-bar span:last-child {
+		color: var(--sl-color-accent);
+	}
+
+	@media (max-width: 64rem) {
+		.home-hero {
+			grid-template-columns: 1fr;
+			gap: 3.5rem;
+		}
+
+		.hero-copy h1 {
+			max-width: 14ch;
+		}
+
+	}
+
+	@media (max-width: 40rem) {
+		.home-hero {
+			padding-top: 2.5rem;
+		}
+
+		.hero-copy h1 {
+			font-size: clamp(2.45rem, 12vw, 3.25rem);
+		}
+
+		.code-window {
+			grid-template-columns: 1fr;
+			min-height: 22rem;
+		}
+
+		.explorer {
+			display: none;
+		}
+
+		.code-lines {
+			overflow-x: auto;
+		}
+	}
+</style>
