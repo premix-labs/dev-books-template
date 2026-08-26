@@ -1,0 +1,18 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const frontmatter = {
+	title: '404',
+	description: 'ไม่พบหน้าที่คุณกำลังค้นหา',
+	template: 'splash' as const,
+	hero: {
+		tagline: 'ไม่พบหน้าที่คุณกำลังค้นหา กรุณาตรวจสอบ URL หรือลองใช้ช่องค้นหา',
+	},
+	tableOfContents: false,
+	pagefind: false,
+	pagination: false,
+	editUrl: false as const,
+};
+---
+
+<StarlightPage frontmatter={frontmatter} />

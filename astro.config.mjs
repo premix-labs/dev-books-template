@@ -1,24 +1,35 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import tailwindcss from '@tailwindcss/vite';
+
+const [githubOwner, githubRepo] = process.env.GITHUB_REPOSITORY?.split('/') ?? [];
+const isUserSite = githubOwner && githubRepo === `${githubOwner}.github.io`;
+const site =
+	process.env.SITE_URL ??
+	(githubOwner ? `https://${githubOwner}.github.io` : 'https://premix-labs.github.io');
+const base =
+	process.env.BASE_PATH ??
+	(githubRepo ? (isUserSite ? '/' : `/${githubRepo}`) : '/dev-books-template');
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://premix-labs.github.io',
-	base: '/dev-books-template',
+	site,
+	base,
 	devToolbar: { enabled: false },
 	integrations: [
 		starlight({
 			title: 'Dev Books Template',
 			description: 'เทมเพลตหนังสือ Programming ออนไลน์สำหรับ Developer',
 			favicon: '/favicon.svg',
+			disable404Route: true,
 			locales: {
 				root: {
 					label: 'ไทย',
 					lang: 'th',
 				},
 			},
-			customCss: ['./src/styles/custom.css'],
+			customCss: ['./src/styles/global.css'],
 			components: {
 				Header: './src/components/Header.astro',
 				Hero: './src/components/HomeHero.astro',
@@ -39,4 +50,7 @@ export default defineConfig({
 			],
 		}),
 	],
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

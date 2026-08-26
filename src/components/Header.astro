@@ -1,8 +1,8 @@
 ---
 import config from 'virtual:starlight/user-config';
-import Search from 'virtual:starlight/components/Search';
-import SiteTitle from 'virtual:starlight/components/SiteTitle';
-import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
+import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
 
 const pathname = Astro.url.pathname;
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -16,184 +16,199 @@ const navItems = [
 ];
 ---
 
-<div class="header-shell">
-	<div class="title-wrapper">
+<div
+	data-mobile-menu
+	data-menu-open="false"
+	class="grid h-full grid-cols-[minmax(10rem,1fr)_auto_minmax(10rem,1fr)] items-center gap-8 max-[49.99rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[49.99rem]:gap-3"
+>
+	<div
+		class="min-w-0 [&_.site-title]:text-[1.55rem] [&_.site-title]:font-[760] [&_.site-title]:tracking-[-0.04em] [&_.site-title]:text-[var(--sl-color-white)] max-[26rem]:[&_.site-title]:text-[clamp(1.08rem,5.6vw,1.35rem)]"
+	>
 		<SiteTitle />
 	</div>
 
-	<nav class="desktop-nav" aria-label="เมนูหลัก">
+	<nav
+		class="flex h-[calc(var(--sl-nav-height)-2*var(--sl-nav-pad-y))] items-stretch gap-10 max-[49.99rem]:hidden"
+		aria-label="เมนูหลัก"
+	>
 		{
 			navItems.map((item) => (
-				<a href={item.href} class:list={{ active: item.active }} aria-current={item.active ? 'page' : undefined}>
+				<a
+					href={item.href}
+					class:list={[
+						"relative inline-flex items-center text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline after:absolute after:inset-x-0 after:bottom-[-0.78rem] after:h-[3px] after:origin-center after:scale-x-0 after:bg-[var(--sl-color-accent)] after:content-[''] after:transition-transform after:duration-150 hover:text-[var(--sl-color-text-accent)] hover:after:scale-x-100 focus-visible:text-[var(--sl-color-text-accent)] focus-visible:after:scale-x-100 motion-reduce:after:transition-none",
+						{ 'text-[var(--sl-color-text-accent)] after:scale-x-100': item.active },
+					]}
+					aria-current={item.active ? 'page' : undefined}
+				>
 					{item.label}
 				</a>
 			))
 		}
 	</nav>
 
-	<details class="mobile-nav">
-		<summary aria-label="เปิดเมนูหลัก">
-			<svg viewBox="0 0 24 24" aria-hidden="true">
+	<div class="relative order-2 hidden max-[49.99rem]:block">
+		<button
+			type="button"
+			data-menu-toggle
+			class="relative z-[60] grid size-8 cursor-pointer place-items-center rounded-[0.35rem] border border-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)] transition-colors duration-150 hover:border-[var(--sl-color-accent)] hover:text-[var(--sl-color-text-accent)] focus-visible:border-[var(--sl-color-accent)] focus-visible:text-[var(--sl-color-text-accent)] motion-reduce:transition-none"
+			aria-label="เปิดเมนูหลัก"
+			aria-controls="mobile-primary-menu"
+			aria-expanded="false"
+		>
+			<svg
+				data-menu-open-icon
+				class="size-[1.15rem] fill-none stroke-current transition-[opacity,rotate,scale] duration-200 ease-out [stroke-linecap:round] [stroke-width:1.8] motion-reduce:transition-none"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
 				<path d="M4 7h16M4 12h16M4 17h16" />
 			</svg>
-		</summary>
-		<nav class="mobile-nav-panel" aria-label="เมนูหลักบนมือถือ">
+			<svg
+				data-menu-close-icon
+				class="absolute size-[1.15rem] scale-75 fill-none stroke-current opacity-0 transition-[opacity,scale] duration-200 ease-out [stroke-linecap:round] [stroke-width:1.8] motion-reduce:transition-none"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path d="M6 6l12 12M18 6 6 18" />
+			</svg>
+		</button>
+
+		<button
+			type="button"
+			data-menu-backdrop
+			class="pointer-events-none fixed inset-x-0 top-[var(--sl-nav-height)] bottom-0 z-40 hidden hidden! cursor-default bg-[#0d1422]/20 opacity-0 transition-opacity duration-200 ease-out motion-reduce:transition-none max-[49.99rem]:block"
+			tabindex="-1"
+			aria-hidden="true"
+		></button>
+
+		<nav
+			id="mobile-primary-menu"
+			data-menu-panel
+			class="pointer-events-none invisible fixed inset-x-0 top-[var(--sl-nav-height)] z-50 hidden hidden! -translate-y-2 flex-col border-b border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] px-4 pt-3 pb-4 opacity-0 shadow-[0_0.75rem_2rem_rgb(18_32_62_/_10%)] transition-[opacity,translate,visibility] duration-200 ease-out motion-reduce:transition-none max-[49.99rem]:flex"
+			aria-label="เมนูหลักบนมือถือ"
+			aria-hidden="true"
+			inert
+		>
 			{
 				navItems.map((item) => (
-					<a href={item.href} aria-current={item.active ? 'page' : undefined}>
+					<a
+						href={item.href}
+						class="rounded-[0.35rem] p-3 text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline hover:bg-[var(--sl-color-gray-7)] hover:text-[var(--sl-color-text-accent)] focus-visible:bg-[var(--sl-color-gray-7)] focus-visible:text-[var(--sl-color-text-accent)] aria-[current=page]:bg-[var(--sl-color-gray-7)] aria-[current=page]:text-[var(--sl-color-text-accent)]"
+						aria-current={item.active ? 'page' : undefined}
+					>
 						{item.label}
 					</a>
 				))
 			}
+			<div
+				class="mt-2 border-t border-[var(--sl-color-gray-5)] px-3 pt-3 [&>starlight-theme-select]:w-full [&_label]:justify-between"
+			>
+				<ThemeSelect />
+			</div>
 		</nav>
-	</details>
+	</div>
 
-	<div class="tools">
+	<div
+		class="order-3 flex items-center justify-self-end gap-3 max-[49.99rem]:[&>starlight-theme-select]:hidden"
+	>
 		{shouldRenderSearch && <Search />}
 		<ThemeSelect />
 	</div>
 </div>
 
-<style>
-	.header-shell {
-		display: grid;
-		grid-template-columns: minmax(10rem, 1fr) auto minmax(10rem, 1fr);
-		align-items: center;
-		gap: 2rem;
-		height: 100%;
+<script>
+	function setupMobileMenu() {
+		const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+		if (!menu || menu.dataset.menuReady === 'true') return;
+
+		const toggle = menu.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+		const backdrop = menu.querySelector<HTMLButtonElement>('[data-menu-backdrop]');
+		const panel = menu.querySelector<HTMLElement>('[data-menu-panel]');
+		const openIcon = menu.querySelector<SVGElement>('[data-menu-open-icon]');
+		const closeIcon = menu.querySelector<SVGElement>('[data-menu-close-icon]');
+		const searchButton = menu.querySelector<HTMLButtonElement>('button[data-open-modal]');
+		if (!toggle || !backdrop || !panel || !openIcon || !closeIcon) return;
+
+		menu.dataset.menuReady = 'true';
+		let closeTimer: number | undefined;
+
+		const setOpen = (open: boolean, returnFocus = false) => {
+			if (closeTimer) window.clearTimeout(closeTimer);
+
+			if (open) {
+				panel.classList.remove('hidden!');
+				backdrop.classList.remove('hidden!');
+				void panel.offsetWidth;
+			}
+
+			menu.dataset.menuOpen = String(open);
+			toggle.setAttribute('aria-expanded', String(open));
+			toggle.setAttribute('aria-label', open ? 'ปิดเมนูหลัก' : 'เปิดเมนูหลัก');
+			panel.setAttribute('aria-hidden', String(!open));
+			panel.inert = !open;
+
+			panel.classList.toggle('pointer-events-none', !open);
+			panel.classList.toggle('invisible', !open);
+			panel.classList.toggle('-translate-y-2', !open);
+			panel.classList.toggle('opacity-0', !open);
+			panel.classList.toggle('pointer-events-auto', open);
+			panel.classList.toggle('visible', open);
+			panel.classList.toggle('translate-y-0', open);
+			panel.classList.toggle('opacity-100', open);
+
+			backdrop.classList.toggle('pointer-events-none', !open);
+			backdrop.classList.toggle('opacity-0', !open);
+			backdrop.classList.toggle('pointer-events-auto', open);
+			backdrop.classList.toggle('opacity-100', open);
+
+			openIcon.classList.toggle('rotate-90', open);
+			openIcon.classList.toggle('scale-75', open);
+			openIcon.classList.toggle('opacity-0', open);
+			closeIcon.classList.toggle('scale-75', !open);
+			closeIcon.classList.toggle('opacity-0', !open);
+			closeIcon.classList.toggle('scale-100', open);
+			closeIcon.classList.toggle('opacity-100', open);
+
+			document.documentElement.classList.toggle('overflow-hidden', open);
+			document.body.classList.toggle('overflow-hidden', open);
+
+			if (!open) {
+				const hideClosedMenu = () => {
+					if (menu.dataset.menuOpen === 'false') {
+						panel.classList.add('hidden!');
+						backdrop.classList.add('hidden!');
+					}
+				};
+
+				if (matchMedia('(prefers-reduced-motion: reduce)').matches) hideClosedMenu();
+				else closeTimer = window.setTimeout(hideClosedMenu, 200);
+			}
+
+			if (!open && returnFocus) toggle.focus();
+		};
+
+		toggle.addEventListener('click', () => {
+			setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+		});
+
+		backdrop.addEventListener('click', () => setOpen(false, true));
+		searchButton?.addEventListener('click', () => setOpen(false));
+		panel.addEventListener('click', (event) => {
+			if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
+		});
+
+		menu.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+				setOpen(false, true);
+			}
+		});
+
+		matchMedia('(min-width: 50rem)').addEventListener('change', ({ matches }) => {
+			if (matches) setOpen(false);
+		});
 	}
 
-	.title-wrapper {
-		min-width: 0;
-	}
-
-	.desktop-nav {
-		display: flex;
-		align-items: stretch;
-		gap: 2.5rem;
-		height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
-	}
-
-	.desktop-nav a {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		font-size: 0.95rem;
-		font-weight: 600;
-		color: var(--sl-color-gray-2);
-		text-decoration: none;
-	}
-
-	.desktop-nav a::after {
-		position: absolute;
-		inset: auto 0 -0.78rem;
-		height: 3px;
-		background: var(--sl-color-accent);
-		content: '';
-		transform: scaleX(0);
-		transform-origin: center;
-		transition: transform 160ms ease;
-	}
-
-	.desktop-nav a:hover,
-	.desktop-nav a:focus-visible,
-	.desktop-nav a.active {
-		color: var(--sl-color-text-accent);
-	}
-
-	.desktop-nav a:hover::after,
-	.desktop-nav a:focus-visible::after,
-	.desktop-nav a.active::after {
-		transform: scaleX(1);
-	}
-
-	.tools {
-		display: flex;
-		justify-self: end;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.mobile-nav {
-		display: none;
-	}
-
-	@media (max-width: 49.99rem) {
-		.header-shell {
-			grid-template-columns: minmax(0, 1fr) auto auto;
-			gap: 0.75rem;
-		}
-
-		.desktop-nav,
-		.tools > :global(starlight-theme-select) {
-			display: none;
-		}
-
-		.mobile-nav {
-			display: block;
-			order: 2;
-		}
-
-		.mobile-nav summary {
-			display: grid;
-			width: 2rem;
-			height: 2rem;
-			border: 1px solid var(--sl-color-gray-5);
-			border-radius: 0.35rem;
-			place-items: center;
-			color: var(--sl-color-gray-2);
-			cursor: pointer;
-			list-style: none;
-		}
-
-		.mobile-nav summary::-webkit-details-marker {
-			display: none;
-		}
-
-		.mobile-nav summary:hover,
-		.mobile-nav summary:focus-visible {
-			border-color: var(--sl-color-accent);
-			color: var(--sl-color-text-accent);
-		}
-
-		.mobile-nav summary svg {
-			width: 1.15rem;
-			height: 1.15rem;
-			fill: none;
-			stroke: currentColor;
-			stroke-linecap: round;
-			stroke-width: 1.8;
-		}
-
-		.mobile-nav-panel {
-			position: fixed;
-			inset: var(--sl-nav-height) 0 auto;
-			display: flex;
-			flex-direction: column;
-			border-bottom: 1px solid var(--sl-color-gray-5);
-			padding: 0.75rem 1rem 1rem;
-			background: var(--sl-color-bg-nav);
-			box-shadow: 0 0.75rem 2rem rgb(18 32 62 / 10%);
-		}
-
-		.mobile-nav-panel a {
-			border-radius: 0.35rem;
-			padding: 0.75rem;
-			color: var(--sl-color-gray-2);
-			font-size: 0.95rem;
-			font-weight: 600;
-			text-decoration: none;
-		}
-
-		.mobile-nav-panel a:hover,
-		.mobile-nav-panel a:focus-visible,
-		.mobile-nav-panel a[aria-current='page'] {
-			background: var(--sl-color-gray-7);
-			color: var(--sl-color-text-accent);
-		}
-
-		.tools {
-			order: 3;
-		}
-	}
-</style>
+	setupMobileMenu();
+	document.addEventListener('astro:page-load', setupMobileMenu);
+</script>

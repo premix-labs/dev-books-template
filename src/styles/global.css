@@ -1,0 +1,48 @@
+@import '@fontsource-variable/noto-sans-thai';
+
+@layer base, starlight, theme, components, utilities;
+
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme {
+	--font-sans: 'Noto Sans Thai Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+
+	--color-accent-50: #f5f8ff;
+	--color-accent-100: #eaf1ff;
+	--color-accent-200: light-dark(#dbe7ff, #bcd2ff);
+	--color-accent-300: #bcd2ff;
+	--color-accent-400: #9fc0ff;
+	--color-accent-500: #76a6ff;
+	--color-accent-600: light-dark(#075be8, #76a6ff);
+	--color-accent-700: #0649d8;
+	--color-accent-800: #153d7a;
+	--color-accent-900: #102d62;
+	--color-accent-950: #091a3b;
+
+	--color-gray-50: #fbfcfd;
+	--color-gray-100: #f7f8fa;
+	--color-gray-200: #edf0f5;
+	--color-gray-300: #d5dae3;
+	--color-gray-400: #929bae;
+	--color-gray-500: #677287;
+	--color-gray-600: #435066;
+	--color-gray-700: #2c374b;
+	--color-gray-800: #172237;
+	--color-gray-900: light-dark(#101a2d, #0d1422);
+	--color-gray-950: #0d1422;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
