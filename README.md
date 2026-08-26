@@ -10,7 +10,7 @@
 - ตัวอย่างบทเรียน โค้ด แบบฝึกหัด และโปรเจกต์
 - Tailwind CSS 4 สำหรับ custom components
 - GitHub Actions สำหรับ deploy ไป GitHub Pages
-- หน้า 404, sitemap และ metadata พื้นฐาน
+- หน้า 404, sitemap, social preview และ metadata พื้นฐาน
 
 Custom components ใช้ Tailwind utility classes โดยไม่มี `<style>` block ส่วน `src/styles/global.css` มี Tailwind imports, design tokens และ base style เล็กน้อยสำหรับ smooth scrolling ที่เคารพการตั้งค่า reduced motion
 
@@ -26,7 +26,7 @@ npm install
 npm run dev
 ```
 
-เว็บไซต์สำหรับพัฒนาจะแสดงที่ `http://localhost:4321/dev-books-template/` สำหรับชื่อ repo เริ่มต้นนี้
+เว็บไซต์สำหรับพัฒนาจะแสดงที่ `http://localhost:4321/`
 
 ## โครงสร้างเนื้อหา
 
@@ -44,11 +44,13 @@ src/content/docs/
 
 ## ปรับเป็นหนังสือของคุณ
 
-1. เปลี่ยน `name` ใน `package.json`
+1. เปลี่ยน `name`, `description`, `author`, `repository` และ `homepage` ใน `package.json`
 2. เปลี่ยนชื่อ คำอธิบาย และรายการ `sidebar` ใน `astro.config.mjs`
-3. เปลี่ยนโฟลเดอร์ `src/content/docs/example/` เป็น slug ของหนังสือ
-4. แก้หน้าแรกใน `src/content/docs/index.mdx` และ `src/components/BookIndex.astro`
-5. ปรับข้อความและตัวอย่างโค้ดใน `src/components/HomeHero.astro`
+3. เปลี่ยนโฟลเดอร์ `src/content/docs/example/` เป็น slug ของหนังสือ แล้วแก้ลิงก์ที่เกี่ยวข้องใน `astro.config.mjs`, `src/components/Header.astro` และ `src/components/BookIndex.astro`
+4. แก้หน้าแรกใน `src/content/docs/index.mdx` และข้อความหรือตัวอย่างโค้ดใน `src/components/HomeHero.astro`
+5. เปลี่ยนภาพ `public/social-card.png` และไฟล์ต้นฉบับ `public/social-card.svg`
+6. ปรับข้อความหน้า 404 ใน `src/pages/404.astro` และคำแปล UI ใน `src/content/i18n/th.json` เมื่อจำเป็น
+7. เปลี่ยนชื่อผู้ถือลิขสิทธิ์ใน `LICENSE` และหัวข้อ License ด้านล่าง
 
 หากทำหนังสือ C#, TypeScript และ Python แยกเป็น 3 เล่ม แนะนำให้สร้าง repository จาก template นี้ 3 ครั้ง เพื่อให้แต่ละเล่มมี URL, version และรอบ deploy เป็นอิสระจากกัน
 
@@ -63,7 +65,7 @@ src/content/docs/
 
 ## GitHub Pages
 
-เมื่อ push ไป branch `main` workflow จะ build และ deploy เว็บไซต์โดยอัตโนมัติ ค่า `site` และ `base` จะอ่านจากตัวแปร `GITHUB_REPOSITORY` ที่ GitHub Actions เตรียมไว้ จึงรองรับชื่อ repository ใหม่ที่สร้างจาก template โดยไม่ต้องแก้ path ด้วยตนเอง
+เมื่อ push ไป branch `main` workflow จะ build และ deploy เว็บไซต์โดยอัตโนมัติ ค่า `site` และ `base` จะอ่านจากตัวแปร `GITHUB_REPOSITORY` ที่ GitHub Actions เตรียมไว้ จึงรองรับชื่อ repository ใหม่ที่สร้างจาก template โดยไม่ต้องแก้ path ด้วยตนเอง ส่วน local development จะใช้ `/` เพื่อไม่ผูกกับชื่อ repository ต้นฉบับ
 
 สำหรับการ build นอก GitHub สามารถกำหนดค่าเองได้ด้วย environment variables:
 

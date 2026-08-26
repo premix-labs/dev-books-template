@@ -16,4 +16,4 @@ next: false
 - ระบบสารบัญ ค้นหา และ Dark Mode จาก Starlight
 - ตัวอย่างบทเรียนพร้อม code block และแบบฝึกหัด
 - GitHub Actions สำหรับ deploy ไปยัง GitHub Pages
-- CSS และฟอนต์ภาษาไทยที่พร้อมปรับแต่ง
+- Tailwind CSS 4 และฟอนต์ภาษาไทยที่พร้อมปรับแต่ง

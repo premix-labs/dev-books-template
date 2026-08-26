@@ -1,8 +1,8 @@
 ---
 import config from 'virtual:starlight/user-config';
-import Search from '@astrojs/starlight/components/Search.astro';
-import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
-import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 
 const pathname = Astro.url.pathname;
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -11,7 +11,7 @@ const shouldRenderSearch =
 
 const navItems = [
 	{ label: 'หน้าแรก', href: base, active: pathname === base },
-	{ label: 'ตัวอย่าง', href: `${base}#books`, active: false },
+	{ label: 'ตัวอย่าง', href: `${base}example/`, active: pathname.startsWith(`${base}example`) },
 	{ label: 'เกี่ยวกับ', href: `${base}about/`, active: pathname.startsWith(`${base}about`) },
 ];
 ---
@@ -22,7 +22,7 @@ const navItems = [
 	class="grid h-full grid-cols-[minmax(10rem,1fr)_auto_minmax(10rem,1fr)] items-center gap-8 max-[49.99rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[49.99rem]:gap-3"
 >
 	<div
-		class="min-w-0 [&_.site-title]:text-[1.55rem] [&_.site-title]:font-[760] [&_.site-title]:tracking-[-0.04em] [&_.site-title]:text-[var(--sl-color-white)] max-[26rem]:[&_.site-title]:text-[clamp(1.08rem,5.6vw,1.35rem)]"
+		class="min-w-0 [&_.site-title]:text-[1.55rem] [&_.site-title]:font-[760] [&_.site-title]:tracking-[-0.04em] [&_.site-title]:text-[var(--sl-color-white)] [&_.site-title:focus-visible]:rounded-[0.25rem] [&_.site-title:focus-visible]:outline-2 [&_.site-title:focus-visible]:outline-offset-4 [&_.site-title:focus-visible]:outline-[var(--sl-color-accent)] max-[26rem]:[&_.site-title]:text-[clamp(1.08rem,5.6vw,1.35rem)]"
 	>
 		<SiteTitle />
 	</div>
@@ -39,7 +39,7 @@ const navItems = [
 						"relative inline-flex items-center text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline after:absolute after:inset-x-0 after:bottom-[-0.78rem] after:h-[3px] after:origin-center after:scale-x-0 after:bg-[var(--sl-color-accent)] after:content-[''] after:transition-transform after:duration-150 hover:text-[var(--sl-color-text-accent)] hover:after:scale-x-100 focus-visible:text-[var(--sl-color-text-accent)] focus-visible:after:scale-x-100 motion-reduce:after:transition-none",
 						{ 'text-[var(--sl-color-text-accent)] after:scale-x-100': item.active },
 					]}
-					aria-current={item.active ? 'page' : undefined}
+					aria-current={item.active ? (pathname === item.href ? 'page' : 'location') : undefined}
 				>
 					{item.label}
 				</a>
@@ -95,7 +95,7 @@ const navItems = [
 					<a
 						href={item.href}
 						class="rounded-[0.35rem] p-3 text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline hover:bg-[var(--sl-color-gray-7)] hover:text-[var(--sl-color-text-accent)] focus-visible:bg-[var(--sl-color-gray-7)] focus-visible:text-[var(--sl-color-text-accent)] aria-[current=page]:bg-[var(--sl-color-gray-7)] aria-[current=page]:text-[var(--sl-color-text-accent)]"
-						aria-current={item.active ? 'page' : undefined}
+						aria-current={item.active ? (pathname === item.href ? 'page' : 'location') : undefined}
 					>
 						{item.label}
 					</a>

@@ -1,8 +1,16 @@
 {
 	"name": "dev-books-template",
+	"description": "Astro and Starlight template for Thai programming books",
 	"type": "module",
 	"version": "0.0.1",
 	"private": true,
+	"license": "MIT",
+	"author": "Premix Labs",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/premix-labs/dev-books-template.git"
+	},
+	"homepage": "https://premix-labs.github.io/dev-books-template/",
 	"engines": {
 		"node": ">=22.12.0",
 		"npm": ">=9.6.5"

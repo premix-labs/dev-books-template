@@ -7,10 +7,11 @@ const [githubOwner, githubRepo] = process.env.GITHUB_REPOSITORY?.split('/') ?? [
 const isUserSite = githubOwner && githubRepo === `${githubOwner}.github.io`;
 const site =
 	process.env.SITE_URL ??
-	(githubOwner ? `https://${githubOwner}.github.io` : 'https://premix-labs.github.io');
+	(githubOwner ? `https://${githubOwner}.github.io` : 'http://localhost:4321');
 const base =
 	process.env.BASE_PATH ??
-	(githubRepo ? (isUserSite ? '/' : `/${githubRepo}`) : '/dev-books-template');
+	(githubRepo ? (isUserSite ? '/' : `/${githubRepo}`) : '/');
+const socialImage = new URL(`${base.replace(/\/$/, '')}/social-card.png`, site).href;
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +23,27 @@ export default defineConfig({
 			title: 'Dev Books Template',
 			description: 'เทมเพลตหนังสือ Programming ออนไลน์สำหรับ Developer',
 			favicon: '/favicon.svg',
+			head: [
+				{ tag: 'meta', attrs: { property: 'og:image', content: socialImage } },
+				{ tag: 'meta', attrs: { property: 'og:image:type', content: 'image/png' } },
+				{ tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+				{ tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:alt',
+						content: 'Dev Books Template — Programming books for developers',
+					},
+				},
+				{ tag: 'meta', attrs: { name: 'twitter:image', content: socialImage } },
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'twitter:image:alt',
+						content: 'Dev Books Template — Programming books for developers',
+					},
+				},
+			],
 			disable404Route: true,
 			locales: {
 				root: {
@@ -33,6 +55,7 @@ export default defineConfig({
 			components: {
 				Header: './src/components/Header.astro',
 				Hero: './src/components/HomeHero.astro',
+				MobileMenuToggle: './src/components/MobileMenuToggle.astro',
 			},
 			sidebar: [
 				{

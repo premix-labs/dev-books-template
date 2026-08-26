@@ -1,0 +1,33 @@
+---
+import DefaultMobileMenuToggle from '@astrojs/starlight/components/MobileMenuToggle.astro';
+---
+
+<DefaultMobileMenuToggle />
+
+<script>
+	/** Keep the interactive button's ARIA state in sync with Starlight's host element. */
+	function setupMenuButtonAria() {
+		document.querySelectorAll<HTMLElement>('starlight-menu-button').forEach((menuButton) => {
+			if (menuButton.dataset.ariaReady === 'true') return;
+
+			const button = menuButton.querySelector<HTMLButtonElement>(
+				'button[aria-controls="starlight__sidebar"]',
+			);
+			if (!button) return;
+
+			const syncExpandedState = () => {
+				button.setAttribute('aria-expanded', menuButton.getAttribute('aria-expanded') ?? 'false');
+			};
+
+			menuButton.dataset.ariaReady = 'true';
+			syncExpandedState();
+			new MutationObserver(syncExpandedState).observe(menuButton, {
+				attributes: true,
+				attributeFilter: ['aria-expanded'],
+			});
+		});
+	}
+
+	setupMenuButtonAria();
+	document.addEventListener('astro:page-load', setupMenuButtonAria);
+</script>
