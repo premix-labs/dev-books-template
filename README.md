@@ -102,6 +102,11 @@ Custom components ใช้ Tailwind ส่วน global CSS มีเฉพา�
 เมื่อเบราว์เซอร์ปฏิเสธคลิปบอร์ด จะแจ้งวิธีเลือกคัดลอกเอง ไม่แสดงว่าสำเร็จทั้งที่ไม่ได้คัดลอก
 การคัดลอกอัตโนมัติควรใช้ผ่าน HTTPS หรือ localhost และขึ้นอยู่กับสิทธิ์ของเบราว์เซอร์
 
+`src/components/PageTitle.astro` เพิ่มคำค้นจากชื่อบทที่ตัดด้วย `Intl.Segmenter`
+ผ่าน [index attributes ของ Pagefind](https://pagefind.app/docs/indexing/#adding-html-attributes-to-the-index)
+เพื่อรองรับคำไทยที่ตัว indexer และ browser ตัดคำประสมต่างกัน โดยไม่เปลี่ยนชื่อบทที่แสดง
+E2E ค้นด้วยชื่อเต็มของบทต้น กลาง และท้ายเล่ม ไม่ทดสอบเพียงชื่อบทแรก
+
 `src/content.config.ts` ใช้ Astro `glob({ deferRender: true })` ร่วมกับ Starlight schema
 เพื่อ render Markdown ด้วยการตั้งค่าปัจจุบัน ไม่เก็บ HTML ที่อ้าง asset hash เก่าใน content store
 การทดสอบ dev ครอบคลุม config hot reload, warm restart และ build ขณะ dev ยังเปิดอยู่

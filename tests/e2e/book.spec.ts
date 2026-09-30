@@ -221,12 +221,21 @@ test('search finds current book, handles empty results and opens a result', asyn
   const input = page.locator('.pagefind-ui__search-input');
   await input.fill('zzzznotabookword9999');
   await expect(page.locator('.pagefind-ui__message')).toContainText(/0|ไม่พบ/);
-  await input.fill(chapters[0]!.title);
-  const result = page.locator('.pagefind-ui__result-link').filter({ hasText:chapters[0]!.title }).first();
-  await expect(result).toBeVisible();
+  // Check multiple full titles: one title can pass while Thai word segmentation
+  // drops a different chapter (e.g. a compound split as ทีละ vs ที + ละ).
+  const sample = [...new Set([0,Math.floor(chapters.length/2),chapters.length-1])];
+  for (const index of sample) {
+    const chapter = chapters[index]!;
+    await input.fill(chapter.title);
+    const result = page.locator('.pagefind-ui__result-link').filter({ hasText:chapter.title }).first();
+    await expect(result).toBeVisible();
+    await expect(result).toHaveAttribute('href',chapter.href);
+  }
+  const selected = chapters[sample.at(-1)!]!;
+  const result = page.locator('.pagefind-ui__result-link').filter({ hasText:selected.title }).first();
   await accessible(page);
   await result.click();
-  await expect(page.locator('h1')).toHaveText(chapters[0]!.title);
+  await expect(page.locator('h1')).toHaveText(selected.title);
   await page.locator('.pagefind-ui__search-input').waitFor({ state:'attached' });
 });
 

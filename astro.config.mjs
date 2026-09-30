@@ -38,6 +38,7 @@ export default defineConfig({
 			plugins: [{ name: 'Keyboard-readable code', hooks: { postprocessRenderedBlock: ({ renderData }) => makeCodeFocusable(renderData.blockAst) } }],
 		},
 		components: {
+			PageTitle: './src/components/PageTitle.astro',
 			Header: './src/components/Header.astro',
 			Hero: './src/components/HomeHero.astro',
 			Sidebar: './src/components/Sidebar.astro',

@@ -1,0 +1,13 @@
+---
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+const title = Astro.locals.starlightRoute.entry.data.title;
+// Pagefind's indexer and browsers can split Thai compounds differently.
+// Add browser-style title tokens without changing the visible heading.
+const searchWords = /\p{Script=Thai}/u.test(title)
+	? [...new Intl.Segmenter('th', { granularity: 'word' }).segment(title)]
+		.filter(word => word.isWordLike).map(word => word.segment).join(' ')
+	: undefined;
+---
+<div class="contents" data-pagefind-index-attrs={searchWords ? 'data-search-words' : undefined} data-search-words={searchWords}>
+	<Default />
+</div>
