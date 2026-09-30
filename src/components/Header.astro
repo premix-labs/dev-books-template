@@ -1,214 +1,39 @@
 ---
-import config from 'virtual:starlight/user-config';
 import Search from 'virtual:starlight/components/Search';
 import SiteTitle from 'virtual:starlight/components/SiteTitle';
-import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
-
-const pathname = Astro.url.pathname;
-const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
-const shouldRenderSearch =
-	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
-
-const navItems = [
-	{ label: 'หน้าแรก', href: base, active: pathname === base },
-	{ label: 'ตัวอย่าง', href: `${base}example/`, active: pathname.startsWith(`${base}example`) },
-	{ label: 'เกี่ยวกับ', href: `${base}about/`, active: pathname.startsWith(`${base}about`) },
-];
+import ThemeSelect from './ThemeSelect.astro';
+import { getNavigation } from '../lib/navigation';
+const navItems = getNavigation(Astro.url.pathname);
+const { hasSidebar } = Astro.locals.starlightRoute;
 ---
-
-<div
-	data-mobile-menu
-	data-menu-open="false"
-	class="grid h-full grid-cols-[minmax(10rem,1fr)_auto_minmax(10rem,1fr)] items-center gap-8 max-[49.99rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[49.99rem]:gap-3"
->
-	<div
-		class="min-w-0 [&_.site-title]:text-[1.55rem] [&_.site-title]:font-[760] [&_.site-title]:tracking-[-0.04em] [&_.site-title]:text-[var(--sl-color-white)] [&_.site-title:focus-visible]:rounded-[0.25rem] [&_.site-title:focus-visible]:outline-2 [&_.site-title:focus-visible]:outline-offset-4 [&_.site-title:focus-visible]:outline-[var(--sl-color-accent)] max-[26rem]:[&_.site-title]:text-[clamp(1.08rem,5.6vw,1.35rem)]"
-	>
-		<SiteTitle />
-	</div>
-
-	<nav
-		class="flex h-[calc(var(--sl-nav-height)-2*var(--sl-nav-pad-y))] items-stretch gap-10 max-[49.99rem]:hidden"
-		aria-label="เมนูหลัก"
-	>
-		{
-			navItems.map((item) => (
-				<a
-					href={item.href}
-					class:list={[
-						"relative inline-flex items-center text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline after:absolute after:inset-x-0 after:bottom-[-0.78rem] after:h-[3px] after:origin-center after:scale-x-0 after:bg-[var(--sl-color-accent)] after:content-[''] after:transition-transform after:duration-150 hover:text-[var(--sl-color-text-accent)] hover:after:scale-x-100 focus-visible:text-[var(--sl-color-text-accent)] focus-visible:after:scale-x-100 motion-reduce:after:transition-none",
-						{ 'text-[var(--sl-color-text-accent)] after:scale-x-100': item.active },
-					]}
-					aria-current={item.active ? (pathname === item.href ? 'page' : 'location') : undefined}
-				>
-					{item.label}
-				</a>
-			))
-		}
+<div class="grid h-full grid-cols-[minmax(10rem,1fr)_auto_minmax(10rem,1fr)] items-center gap-8 max-[49.99rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[49.99rem]:gap-2">
+	<div class="min-w-0 [&_.site-title]:text-[1.55rem] [&_.site-title]:font-[760] [&_.site-title]:tracking-[-0.04em] [&_.site-title]:text-[var(--sl-color-white)] max-[26rem]:[&_.site-title]:text-[clamp(1rem,5.6vw,1.35rem)]"><SiteTitle /></div>
+	<nav class="flex h-[calc(var(--sl-nav-height)-2*var(--sl-nav-pad-y))] items-stretch gap-10 max-[49.99rem]:hidden" aria-label="เมนูหลัก">
+		{navItems.map(item => <a href={item.href} aria-current={item.active ? 'page' : undefined} class="relative inline-flex items-center text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline after:absolute after:inset-x-0 after:bottom-[-0.78rem] after:h-[3px] after:origin-center after:scale-x-0 after:bg-[var(--sl-color-accent)] after:content-[''] after:transition-transform after:duration-150 hover:text-[var(--sl-color-text-accent)] hover:after:scale-x-100 aria-[current=page]:text-[var(--sl-color-text-accent)] aria-[current=page]:after:scale-x-100 motion-reduce:after:transition-none">{item.label}</a>)}
 	</nav>
-
-	<div class="relative order-2 hidden max-[49.99rem]:block">
-		<button
-			type="button"
-			data-menu-toggle
-			class="relative z-[60] grid size-8 cursor-pointer place-items-center rounded-[0.35rem] border border-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)] transition-colors duration-150 hover:border-[var(--sl-color-accent)] hover:text-[var(--sl-color-text-accent)] focus-visible:border-[var(--sl-color-accent)] focus-visible:text-[var(--sl-color-text-accent)] motion-reduce:transition-none"
-			aria-label="เปิดเมนูหลัก"
-			aria-controls="mobile-primary-menu"
-			aria-expanded="false"
-		>
-			<svg
-				data-menu-open-icon
-				class="size-[1.15rem] fill-none stroke-current transition-[opacity,rotate,scale] duration-200 ease-out [stroke-linecap:round] [stroke-width:1.8] motion-reduce:transition-none"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path d="M4 7h16M4 12h16M4 17h16" />
-			</svg>
-			<svg
-				data-menu-close-icon
-				class="absolute size-[1.15rem] scale-75 fill-none stroke-current opacity-0 transition-[opacity,scale] duration-200 ease-out [stroke-linecap:round] [stroke-width:1.8] motion-reduce:transition-none"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path d="M6 6l12 12M18 6 6 18" />
-			</svg>
+	{!hasSidebar && <>
+		<button type="button" popovertarget="mobile-primary-menu" data-menu-toggle aria-label="เมนูหลัก" class="hidden size-11 cursor-pointer items-center justify-center rounded-md border border-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)] max-[49.99rem]:inline-flex">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
 		</button>
-
-		<button
-			type="button"
-			data-menu-backdrop
-			class="pointer-events-none fixed inset-x-0 top-[var(--sl-nav-height)] bottom-0 z-40 hidden hidden! cursor-default bg-[#0d1422]/20 opacity-0 transition-opacity duration-200 ease-out motion-reduce:transition-none max-[49.99rem]:block"
-			tabindex="-1"
-			aria-hidden="true"
-		></button>
-
-		<nav
-			id="mobile-primary-menu"
-			data-menu-panel
-			class="pointer-events-none invisible fixed inset-x-0 top-[var(--sl-nav-height)] z-50 hidden hidden! -translate-y-2 flex-col border-b border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] px-4 pt-3 pb-4 opacity-0 shadow-[0_0.75rem_2rem_rgb(18_32_62_/_10%)] transition-[opacity,translate,visibility] duration-200 ease-out motion-reduce:transition-none max-[49.99rem]:flex"
-			aria-label="เมนูหลักบนมือถือ"
-			aria-hidden="true"
-			inert
-		>
-			{
-				navItems.map((item) => (
-					<a
-						href={item.href}
-						class="rounded-[0.35rem] p-3 text-[0.95rem] font-semibold text-[var(--sl-color-gray-2)] no-underline hover:bg-[var(--sl-color-gray-7)] hover:text-[var(--sl-color-text-accent)] focus-visible:bg-[var(--sl-color-gray-7)] focus-visible:text-[var(--sl-color-text-accent)] aria-[current=page]:bg-[var(--sl-color-gray-7)] aria-[current=page]:text-[var(--sl-color-text-accent)]"
-						aria-current={item.active ? (pathname === item.href ? 'page' : 'location') : undefined}
-					>
-						{item.label}
-					</a>
-				))
-			}
-			<div
-				class="mt-2 border-t border-[var(--sl-color-gray-5)] px-3 pt-3 [&>starlight-theme-select]:w-full [&_label]:justify-between"
-			>
-				<ThemeSelect />
-			</div>
+		<nav popover="auto" id="mobile-primary-menu" aria-label="เมนูหลักบนมือถือ" class="fixed inset-x-0 top-[var(--sl-nav-height)] bottom-auto m-0 max-h-[calc(100dvh-var(--sl-nav-height))] w-full overflow-y-auto border-0 border-b border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] px-4 py-3 text-[var(--sl-color-gray-2)] shadow-lg">
+			{navItems.map(item => <a href={item.href} aria-current={item.active ? 'page' : undefined} class="block rounded-md p-3 font-semibold no-underline hover:bg-[var(--sl-color-gray-7)] aria-[current=page]:text-[var(--sl-color-text-accent)]">{item.label}</a>)}
+			<div class="mt-2 border-t border-[var(--sl-color-gray-5)] pt-3"><ThemeSelect /></div>
 		</nav>
-	</div>
-
-	<div
-		class="order-3 flex items-center justify-self-end gap-3 max-[49.99rem]:[&>starlight-theme-select]:hidden"
-	>
-		{shouldRenderSearch && <Search />}
-		<ThemeSelect />
+	</>}
+	<div class:list={['flex items-center justify-self-end gap-3 max-[49.99rem]:[&>.book-theme]:hidden', { 'max-[49.99rem]:col-span-2': hasSidebar }]}>
+		<Search /><ThemeSelect />
 	</div>
 </div>
-
 <script>
-	function setupMobileMenu() {
-		const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
-		if (!menu || menu.dataset.menuReady === 'true') return;
-
-		const toggle = menu.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-		const backdrop = menu.querySelector<HTMLButtonElement>('[data-menu-backdrop]');
-		const panel = menu.querySelector<HTMLElement>('[data-menu-panel]');
-		const openIcon = menu.querySelector<SVGElement>('[data-menu-open-icon]');
-		const closeIcon = menu.querySelector<SVGElement>('[data-menu-close-icon]');
-		const searchButton = menu.querySelector<HTMLButtonElement>('button[data-open-modal]');
-		if (!toggle || !backdrop || !panel || !openIcon || !closeIcon) return;
-
-		menu.dataset.menuReady = 'true';
-		let closeTimer: number | undefined;
-
-		const setOpen = (open: boolean, returnFocus = false) => {
-			if (closeTimer) window.clearTimeout(closeTimer);
-
-			if (open) {
-				panel.classList.remove('hidden!');
-				backdrop.classList.remove('hidden!');
-				void panel.offsetWidth;
-			}
-
-			menu.dataset.menuOpen = String(open);
-			toggle.setAttribute('aria-expanded', String(open));
-			toggle.setAttribute('aria-label', open ? 'ปิดเมนูหลัก' : 'เปิดเมนูหลัก');
-			panel.setAttribute('aria-hidden', String(!open));
-			panel.inert = !open;
-
-			panel.classList.toggle('pointer-events-none', !open);
-			panel.classList.toggle('invisible', !open);
-			panel.classList.toggle('-translate-y-2', !open);
-			panel.classList.toggle('opacity-0', !open);
-			panel.classList.toggle('pointer-events-auto', open);
-			panel.classList.toggle('visible', open);
-			panel.classList.toggle('translate-y-0', open);
-			panel.classList.toggle('opacity-100', open);
-
-			backdrop.classList.toggle('pointer-events-none', !open);
-			backdrop.classList.toggle('opacity-0', !open);
-			backdrop.classList.toggle('pointer-events-auto', open);
-			backdrop.classList.toggle('opacity-100', open);
-
-			openIcon.classList.toggle('rotate-90', open);
-			openIcon.classList.toggle('scale-75', open);
-			openIcon.classList.toggle('opacity-0', open);
-			closeIcon.classList.toggle('scale-75', !open);
-			closeIcon.classList.toggle('opacity-0', !open);
-			closeIcon.classList.toggle('scale-100', open);
-			closeIcon.classList.toggle('opacity-100', open);
-
-			document.documentElement.classList.toggle('overflow-hidden', open);
-			document.body.classList.toggle('overflow-hidden', open);
-
-			if (!open) {
-				const hideClosedMenu = () => {
-					if (menu.dataset.menuOpen === 'false') {
-						panel.classList.add('hidden!');
-						backdrop.classList.add('hidden!');
-					}
-				};
-
-				if (matchMedia('(prefers-reduced-motion: reduce)').matches) hideClosedMenu();
-				else closeTimer = window.setTimeout(hideClosedMenu, 200);
-			}
-
-			if (!open && returnFocus) toggle.focus();
-		};
-
-		toggle.addEventListener('click', () => {
-			setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-		});
-
-		backdrop.addEventListener('click', () => setOpen(false, true));
-		searchButton?.addEventListener('click', () => setOpen(false));
-		panel.addEventListener('click', (event) => {
-			if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
-		});
-
-		menu.addEventListener('keydown', (event) => {
-			if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-				setOpen(false, true);
-			}
-		});
-
-		matchMedia('(min-width: 50rem)').addEventListener('change', ({ matches }) => {
-			if (matches) setOpen(false);
-		});
-	}
-
-	setupMobileMenu();
-	document.addEventListener('astro:page-load', setupMobileMenu);
+	import '../scripts/code-copy';
+	const panel = document.querySelector<HTMLElement>('#mobile-primary-menu');
+	panel?.addEventListener('click', event => { if ((event.target as Element).closest('a')) panel.hidePopover(); });
+	panel?.addEventListener('focusout', event => {
+		if (event.relatedTarget instanceof Node && !panel.contains(event.relatedTarget)) panel.hidePopover();
+	});
+	matchMedia('(min-width: 50rem)').addEventListener('change', ({ matches }) => { if (matches) panel?.hidePopover(); });
+	document.querySelector('[data-open-modal]')?.addEventListener('click', () => panel?.hidePopover());
+	document.querySelector('site-search dialog')?.addEventListener('beforetoggle', event => {
+		if ((event as ToggleEvent).newState === 'open') document.querySelectorAll<HTMLElement>('[popover]:popover-open').forEach(menu => menu.hidePopover());
+	});
 </script>

@@ -1,0 +1,34 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import { book } from '../../book.config.mjs';
+import { withBase } from '../lib/paths';
+---
+<label class="book-theme inline-flex min-h-11 items-center gap-2 text-[var(--sl-color-gray-2)]">
+	<Icon name="sun" size="1rem" />
+	<span class="sr-only">ธีมสี</span>
+	<select disabled data-book-theme data-storage-key={`${book.id}:${withBase()}:theme`} class="min-h-11 max-w-28 cursor-pointer rounded-sm border-0 bg-transparent pr-2 text-sm disabled:cursor-default">
+		<option value="auto">ตามระบบ</option><option value="light">สว่าง</option><option value="dark">มืด</option>
+	</select>
+</label>
+<script>
+	const selectors = document.querySelectorAll<HTMLSelectElement>('[data-book-theme]');
+	const preferred = matchMedia('(prefers-color-scheme: dark)');
+	const storageKey = selectors[0]?.dataset.storageKey ?? '';
+	let preference = 'auto';
+	try { preference = localStorage.getItem(storageKey) || 'auto'; } catch {}
+	if (!['light', 'dark', 'auto'].includes(preference)) preference = 'auto';
+	const applyTheme = () => {
+		document.documentElement.dataset.theme = preference === 'auto' ? (preferred.matches ? 'dark' : 'light') : preference;
+		selectors.forEach(selector => { selector.value = preference; });
+	};
+	selectors.forEach(selector => {
+		selector.disabled = false;
+		selector.addEventListener('change', () => {
+			preference = selector.value;
+			try { localStorage.setItem(storageKey, preference); } catch {}
+			applyTheme();
+		});
+	});
+	preferred.addEventListener('change', applyTheme);
+	applyTheme();
+</script>

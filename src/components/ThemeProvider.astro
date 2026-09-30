@@ -1,0 +1,14 @@
+---
+import { book } from '../../book.config.mjs';
+import { withBase } from '../lib/paths';
+const storageKey = `${book.id}:${withBase()}:theme`;
+---
+<script is:inline define:vars={{ storageKey }}>
+	(() => {
+		let preference = 'auto';
+		try { preference = localStorage.getItem(storageKey) || 'auto'; } catch {}
+		if (!['light', 'dark', 'auto'].includes(preference)) preference = 'auto';
+		document.documentElement.dataset.theme = preference === 'auto'
+			? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : preference;
+	})();
+</script>

@@ -1,146 +1,38 @@
 ---
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
-
+import { Code } from 'astro:components';
+import { book } from '../../book.config.mjs';
 const isHomepage = Astro.locals.starlightRoute.id === '';
-const codeRowClass =
-	'grid min-h-7 grid-cols-[2.3rem_minmax(max-content,1fr)] text-[clamp(0.72rem,1vw,0.84rem)] leading-[1.7] whitespace-nowrap [font-family:var(--__sl-font-mono)]';
-const codeClass = 'bg-transparent p-0 text-[var(--sl-color-white)]';
+const coverLines = book.cover.code.split(/\r\n|\r|\n/);
 ---
-
-{
-	isHomepage ? (
-		<section
-			class="home-hero not-content relative left-1/2 grid w-[calc(100vw-2*clamp(1.25rem,4vw,3rem))] max-w-[88rem] -translate-x-1/2 grid-cols-[minmax(0,0.95fr)_minmax(34rem,1.05fr)] items-center gap-[clamp(2.25rem,3.5vw,3.5rem)] pt-[clamp(3.5rem,5vw,4rem)] pb-[clamp(3rem,5vw,4rem)] max-[64rem]:grid-cols-1 max-[64rem]:gap-14 max-[40rem]:pt-10"
-			aria-labelledby="_top"
-		>
-	<div>
-		<h1
-			id="_top"
-			class="m-0 max-w-none text-[clamp(3.25rem,4.2vw,3.75rem)] font-[750] leading-[1.18] tracking-[-0.045em] text-[var(--sl-color-white)] max-[64rem]:max-w-[14ch] max-[40rem]:text-[clamp(2.45rem,12vw,3.25rem)]"
-		>
-			เทมเพลตหนังสือออนไลน์<br />สำหรับ Developer
-		</h1>
-		<p
-			class="mt-[1.65rem] mb-0 max-w-[35rem] text-[clamp(1.1rem,1.5vw,1.35rem)] leading-[1.7] text-[var(--sl-color-gray-3)]"
-		>
-			โครงเริ่มต้นพร้อมตัวอย่างบทเรียน โค้ด แบบฝึกหัด และโปรเจกต์
-		</p>
-		<a
-			class="mt-[2.15rem] inline-flex items-center gap-6 rounded-[0.45rem] bg-[var(--sl-color-accent)] px-6 py-[0.95rem] text-base font-[650] text-white no-underline transition-[background-color,translate] duration-150 hover:-translate-y-0.5 hover:bg-[#0649d8] hover:text-white focus-visible:-translate-y-0.5 focus-visible:bg-[#0649d8] focus-visible:text-white motion-reduce:transform-none motion-reduce:transition-none"
-			href="#books"
-		>
-			<span>ดูเนื้อหาตัวอย่าง</span>
-			<svg
-				class="size-5 fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:1.8]"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path d="M5 12h14M13 6l6 6-6 6" />
-			</svg>
-		</a>
-	</div>
-
-	<figure
-		class="code-window m-0 grid min-h-[24.5rem] grid-cols-[10.25rem_1fr] overflow-hidden rounded-[0.7rem] border border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg)] shadow-[0_1.2rem_4rem_rgb(18_32_62_/_7%)] max-[40rem]:min-h-[22rem] max-[40rem]:grid-cols-1"
-		aria-label="ตัวอย่างหน้าต่างโค้ดสำหรับหนังสือ Programming"
-	>
-		<div
-			class="flex flex-col border-r border-[var(--sl-color-gray-5)] bg-[color-mix(in_srgb,var(--sl-color-bg)_96%,var(--sl-color-accent)_4%)] py-[1.2rem] text-[0.76rem] text-[var(--sl-color-gray-2)] [font-family:var(--__sl-font-mono)] max-[40rem]:hidden"
-		>
-			<span class="px-4 pb-[0.9rem] text-[0.68rem] font-bold tracking-[0.04em]">EXPLORER</span>
-			<span class="relative py-[0.43rem] pr-3 pl-8">
-				<span
-					class="absolute top-[0.6rem] left-[0.85rem] h-[0.48rem] w-[0.65rem] rounded-[1px] border border-current opacity-70"
-					aria-hidden="true"
-				></span>
-				your-book
-			</span>
-			<span class="relative py-[0.43rem] pr-3 pl-[2.65rem]">
-				<span
-					class="absolute top-[0.6rem] left-6 h-[0.48rem] w-[0.65rem] rounded-[1px] border border-current opacity-70"
-					aria-hidden="true"
-				></span>
-				src
-			</span>
-			<span
-				class="relative bg-[var(--sl-color-gray-6)] py-[0.43rem] pr-3 pl-[2.65rem] text-[var(--sl-color-white)]"
-			>
-				<span class="absolute top-[0.45rem] left-6 text-[0.68rem] font-bold text-[var(--sl-color-accent)]" aria-hidden="true"
-					>TS</span
-				>
-				index.ts
-			</span>
-			<span class="relative py-[0.43rem] pr-3 pl-[2.65rem]">
-				<span class="absolute top-[0.45rem] left-6 text-[0.68rem] font-bold text-[var(--sl-color-accent)]" aria-hidden="true"
-					>TS</span
-				>
-				utils.ts
-			</span>
-			<span class="relative py-[0.43rem] pr-3 pl-8">
-				<span
-					class="absolute top-[0.6rem] left-[0.85rem] h-[0.48rem] w-[0.65rem] rounded-full border border-current opacity-70"
-					aria-hidden="true"
-				></span>
-				README.md
-			</span>
+{isHomepage ? (
+	<section class="home-hero not-content relative left-1/2 grid w-[calc(100vw-2*clamp(1.25rem,4vw,3rem))] max-w-[88rem] -translate-x-1/2 grid-cols-[minmax(0,0.95fr)_minmax(34rem,1.05fr)] items-center gap-[clamp(2.25rem,3.5vw,3.5rem)] pt-[clamp(3.5rem,5vw,4rem)] pb-[clamp(3rem,5vw,4rem)] max-[64rem]:grid-cols-1 max-[64rem]:gap-14 max-[40rem]:pt-10" aria-labelledby="_top">
+		<div class="min-w-0">
+			<h1 id="_top" class="m-0 max-w-none text-[clamp(3.25rem,4.2vw,3.75rem)] leading-[1.18] font-[750] tracking-[-0.045em] break-words text-[var(--sl-color-white)] max-[64rem]:max-w-[18ch] max-[40rem]:text-[clamp(2.1rem,10vw,3.25rem)]">{book.headline.map(line => <span class="block">{line}</span>)}</h1>
+			<p class="mt-[1.65rem] mb-0 max-w-[35rem] text-[clamp(1.1rem,1.5vw,1.35rem)] leading-[1.7] text-[var(--sl-color-gray-3)]">{book.description}</p>
+			<a class="mt-[2.15rem] inline-flex items-center gap-6 rounded-[0.45rem] bg-[#075be8] px-6 py-[0.95rem] text-base font-[650] text-white no-underline transition-[background-color,translate] duration-150 hover:-translate-y-0.5 hover:bg-[#0649d8] hover:text-white motion-reduce:transform-none motion-reduce:transition-none" href="#books">
+				<span>เปิดสารบัญ</span><svg class="size-5 fill-none stroke-current" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+			</a>
 		</div>
-
-		<div class="relative grid min-w-0 grid-rows-[3.1rem_1fr_2.6rem]">
-			<div
-				class="w-[10.5rem] self-stretch border-r border-b border-[var(--sl-color-gray-5)] px-4 py-[0.9rem] text-[0.78rem] text-[var(--sl-color-gray-2)] [font-family:var(--__sl-font-mono)]"
-			>
-				<span class="mr-[0.6rem] font-bold text-[var(--sl-color-accent)]">TS</span> index.ts
+		<figure class="code-window m-0 grid min-h-[24.5rem] grid-cols-[10.25rem_minmax(0,1fr)] overflow-hidden rounded-[0.7rem] border border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg)] shadow-[0_1.2rem_4rem_rgb(18_32_62_/_7%)] max-[40rem]:min-h-[22rem] max-[40rem]:grid-cols-1">
+			<figcaption class="sr-only">โค้ดตัวอย่างใน {book.cover.fileName}</figcaption>
+			<div aria-hidden="true" class="flex flex-col border-r border-[var(--sl-color-gray-5)] bg-[color-mix(in_srgb,var(--sl-color-bg)_96%,var(--sl-color-accent)_4%)] py-[1.2rem] font-mono text-[0.76rem] text-[var(--sl-color-gray-2)] max-[40rem]:hidden">
+				<span class="px-4 pb-[0.9rem] text-[0.68rem] font-bold tracking-[0.04em]">EXPLORER</span>
+				<span class="flex items-center gap-2 px-4 py-[0.43rem]"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M1 4h5l2 2h7v8H1z" /></svg>your-book</span>
+				<span class="py-[0.43rem] pl-8">src</span>
+				<span class="truncate bg-[var(--sl-color-gray-6)] py-[0.43rem] pr-3 pl-8 text-[var(--sl-color-white)]">{book.cover.fileName}</span>
+				<span class="py-[0.43rem] pl-4">README.md</span>
 			</div>
-			<div class="overflow-hidden px-4 py-[1.2rem] max-[40rem]:overflow-x-auto" aria-hidden="true">
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">1</span>
-					<code class={codeClass}><b class="font-[650] text-[var(--sl-color-accent)]">export function</b> greet(name: <i
-							class="not-italic text-[#16803b]">string</i
-						>): <i class="not-italic text-[#16803b]">string</i> {'{'}</code
-					>
+			<div class="grid min-w-0 grid-rows-[3.1rem_1fr_2.6rem]">
+				<div data-cover-file class="max-w-full min-w-0 w-fit truncate border-r border-b border-[var(--sl-color-gray-5)] px-4 py-[0.9rem] font-mono text-[0.78rem] text-[var(--sl-color-gray-2)]"><span aria-hidden="true" class="mr-3 font-bold text-[var(--sl-color-text-accent)]">&lt;/&gt;</span>{book.cover.fileName}</div>
+				<div class="book-cover-code max-h-96 overflow-auto py-[1.2rem] font-mono text-[clamp(0.72rem,1vw,0.84rem)] leading-7" role="region" tabindex="0" aria-label="โค้ดตัวอย่าง เลื่อนแนวนอนและแนวตั้งได้">
+					<div class="flex min-w-max">
+						<div data-cover-lines aria-hidden="true" class="sticky left-0 w-[3.3rem] shrink-0 bg-[var(--sl-color-bg)] pr-4 pl-4 text-[var(--sl-color-gray-3)] select-none">{coverLines.map((_, index) => <span class="block">{index + 1}</span>)}</div>
+						<Code code={book.cover.code} lang={book.cover.language} themes={{ light: 'github-light-default', dark: 'github-dark-default' }} defaultColor={false} wrap={null} />
+					</div>
 				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">2</span>
-					<code class={codeClass}>&nbsp;&nbsp;<b class="font-[650] text-[var(--sl-color-accent)]">const</b> message = <em
-							class="not-italic text-[#c5343b]">`สวัสดี, $&#123;name&#125;!`</em
-						>;</code
-					>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">3</span>
-					<code class={codeClass}>&nbsp;&nbsp;<b class="font-[650] text-[var(--sl-color-accent)]">return</b> message;</code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">4</span><code class={codeClass}>{'}'}</code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">5</span><code class={codeClass}></code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">6</span>
-					<code class={codeClass}>greet(<em class="not-italic text-[#c5343b]">'Developer'</em>);</code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">7</span><code class={codeClass}></code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">8</span>
-					<code class="bg-transparent p-0 text-[#16803b]">// แนวคิดสำคัญ</code>
-				</div>
-				<div class={codeRowClass}>
-					<span class="select-none text-[var(--sl-color-gray-4)]">9</span>
-					<code class="bg-transparent p-0 text-[#16803b]">// เขียนโค้ดที่อ่านง่าย ทดสอบได้ และนำไปใช้ได้จริง</code>
-				</div>
+				<div class="flex min-w-0 items-center justify-end gap-5 border-t border-[var(--sl-color-gray-5)] px-4 font-mono text-[0.7rem] text-[var(--sl-color-gray-3)]"><span>อ่านอย่างเดียว</span><span>UTF-8</span><span class="truncate text-[var(--sl-color-text-accent)]">{book.cover.language}</span></div>
 			</div>
-			<div
-				class="flex items-center justify-end gap-5 border-t border-[var(--sl-color-gray-5)] px-4 text-[0.7rem] text-[var(--sl-color-gray-3)] [font-family:var(--__sl-font-mono)]"
-			>
-				<span>Ln 6, Col 17</span><span>UTF-8</span><span class="text-[var(--sl-color-accent)]">TypeScript</span>
-			</div>
-		</div>
-	</figure>
-		</section>
-	) : (
-		<DefaultHero {...Astro.props}><slot /></DefaultHero>
-	)
-}
+		</figure>
+	</section>
+) : <DefaultHero {...Astro.props}><slot /></DefaultHero>}

@@ -1,26 +1,7 @@
 ---
-const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
-
-const books = [
-	{
-		number: '01',
-		title: 'ภาพรวมหนังสือตัวอย่าง',
-		status: 'โครงสร้างและแนวทางปรับแต่ง',
-		href: `${base}example/`,
-	},
-	{
-		number: '02',
-		title: 'บทที่ 1: บทเรียนตัวอย่าง',
-		status: 'แนวคิด โค้ด และแบบฝึกหัด',
-		href: `${base}example/chapter/`,
-	},
-	{
-		number: '03',
-		title: 'โปรเจกต์ตัวอย่าง',
-		status: 'โจทย์ฝึกปฏิบัติปลายบท',
-		href: `${base}example/project/`,
-	},
-];
+import { book } from '../../book.config.mjs';
+import { getChapters } from '../lib/chapters';
+const chapters = await getChapters();
 ---
 
 <div
@@ -31,26 +12,26 @@ const books = [
 			id="books-title"
 			class="m-0 pb-[1.15rem] text-[clamp(1.65rem,2.6vw,2.25rem)] font-[720] tracking-[-0.03em] text-[var(--sl-color-white)]"
 		>
-			เนื้อหาตัวอย่าง
+			{book.contentsLabel}
 		</h2>
 		<ol class="m-0 list-none border-t border-[var(--sl-color-gray-5)] p-0">
 			{
-				books.map((book) => (
+				chapters.map((chapter, index) => (
 					<li class="m-0 border-b border-[var(--sl-color-gray-5)]">
 						<a
-							href={book.href}
-							class="group grid grid-cols-[5rem_minmax(0,1fr)_auto_1.5rem] items-center gap-5 px-5 py-6 text-[var(--sl-color-white)] no-underline transition-colors duration-150 hover:bg-[var(--sl-color-gray-7)] focus-visible:bg-[var(--sl-color-gray-7)] focus-visible:outline-none motion-reduce:transition-none max-[42rem]:grid-cols-[3.25rem_minmax(0,1fr)_1.25rem] max-[42rem]:gap-3 max-[42rem]:px-0"
+							href={chapter.href}
+							class="group grid grid-cols-[5rem_minmax(0,1fr)_minmax(0,0.75fr)_1.5rem] items-center gap-5 px-5 py-6 text-[var(--sl-color-white)] no-underline transition-[background-color] duration-150 hover:bg-[var(--sl-color-gray-7)] focus-visible:bg-[var(--sl-color-gray-7)] motion-reduce:transition-none max-[42rem]:grid-cols-[3.25rem_minmax(0,1fr)_1.25rem] max-[42rem]:gap-3 max-[42rem]:px-0"
 						>
 							<span
 								class="text-xl font-[750] text-[var(--sl-color-accent)] [font-family:var(--__sl-font-mono)]"
 							>
-								{book.number}
+								{String(index + 1).padStart(2, '0')}
 							</span>
-							<strong class="text-[clamp(1.05rem,1.6vw,1.3rem)] font-[650]">{book.title}</strong>
+							<strong class="min-w-0 text-[clamp(1.05rem,1.6vw,1.3rem)] font-[650] break-words">{chapter.title}</strong>
 							<span
-								class="text-[0.95rem] text-[var(--sl-color-gray-3)] max-[42rem]:col-start-2 max-[42rem]:text-[0.82rem]"
+								class="min-w-0 text-right text-[0.95rem] break-words text-[var(--sl-color-gray-3)] max-[42rem]:col-start-2 max-[42rem]:text-left max-[42rem]:text-[0.82rem]"
 							>
-								{book.status}
+								{chapter.description}
 							</span>
 							<svg
 								class="size-[1.4rem] fill-none stroke-[var(--sl-color-accent)] transition-transform duration-150 [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:2] group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none max-[42rem]:col-start-3 max-[42rem]:row-span-2 max-[42rem]:row-start-1"
@@ -69,6 +50,6 @@ const books = [
 	<footer
 		class="mt-12 border-t border-[var(--sl-color-gray-5)] pt-8 text-base font-bold text-[var(--sl-color-white)]"
 	>
-		Dev Books Template
+		{book.title}
 	</footer>
 </div>

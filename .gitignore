@@ -15,7 +15,12 @@ pnpm-debug.log*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
+
+# local browser artifacts (tests normally use the system temporary directory)
+test-results/
+playwright-report/
 
 # macOS-specific files
 .DS_Store

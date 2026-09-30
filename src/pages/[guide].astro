@@ -1,0 +1,15 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { book } from '../../book.config.mjs';
+export function getStaticPaths() { return book.showAuthorGuide ? [{ params: { guide: 'about' } }] : []; }
+---
+<StarlightPage frontmatter={{ title: 'วิธีใช้ Template', description: 'แนวทางตั้งค่าหนังสือและเขียนบทเรียนแบบพิมพ์ตาม', pagefind: false, pagination: false, editUrl: false, head: [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex' } }] }}>
+	<h2>เริ่มหนังสือเล่มใหม่</h2>
+	<p>แก้ชื่อหนังสือ ผู้เขียน ข้อความหน้าแรก โค้ดหน้าปก และหมวดเนื้อหาใน <code>book.config.mjs</code> ภาพแชร์จะสร้างจากข้อมูลเดียวกันตอน build</p>
+	<p>เขียนบทเรียนใน <code>src/content/docs/</code> ภายใน directory ที่กำหนดใน <code>parts</code> ใส่ title, description และ sidebar.order เป็นจำนวนเต็มบวกไม่ซ้ำกันทั้งเล่ม สารบัญหน้าแรก เมนูข้าง และก่อนหน้า–ถัดไปจะใช้ข้อมูลนี้</p>
+	<h2>รูปแบบบทเรียน</h2>
+	<ol><li>บอกเป้าหมายและสิ่งที่ต้องรู้ก่อนเริ่ม</li><li>อธิบายแนวคิดก่อนให้พิมพ์</li><li>ระบุชื่อไฟล์และตำแหน่งแก้ไข พร้อมโค้ดครบสำหรับขั้นนั้น</li><li>แสดงคำสั่งรันและผลลัพธ์ที่ควรเห็น</li><li>อธิบายเหตุผลของโค้ดและวิธีแก้ข้อผิดพลาดที่อาจพบ</li><li>สรุปและเชื่อมไปบทถัดไป โดยไม่ให้แบบฝึกหัดหรือไฟล์เฉลยแยก</li></ol>
+	<p>ใช้แม่แบบใน <code>templates/chapter.md</code> สำหรับผู้เขียน ผู้เรียนอ่านและพิมพ์ตามจากหน้าบทเรียนได้ทั้งหมด</p>
+	<h2>ก่อนเผยแพร่</h2>
+	<p>รัน <code>npm run validate</code>, <code>npm run test:e2e</code> และ <code>npm run test:reuse</code> ตาม README ตรวจทั้ง root และ subpath ที่จะ deploy ใช้ <code>draft: true</code> สำหรับบทที่ยังไม่เผยแพร่ และตั้ง <code>showAuthorGuide: false</code> เพื่อไม่สร้างหน้านี้ในหนังสือจริง</p>
+</StarlightPage>

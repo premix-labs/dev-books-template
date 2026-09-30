@@ -41,8 +41,38 @@
 	}
 }
 
+/* Integration rules only; the original component layout stays in Tailwind. */
+:root { --sl-content-width: 54rem; }
+:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 4px; }
+.site-title span { text-overflow: ellipsis; }
+.book-theme option { background: var(--sl-color-bg); color: var(--sl-color-text); }
+.book-cover-code pre { margin: 0; padding: 0 1rem 0 0; background: transparent !important; font: inherit; }
+.book-cover-code :is(pre, pre span) { color: var(--shiki-dark); }
+:root[data-theme='light'] .book-cover-code :is(pre, pre span) { color: var(--shiki-light); }
+.book-cover-code:focus-visible { outline-offset: -3px; }
+.sl-markdown-content { overflow-wrap: anywhere; }
+.sl-markdown-content :not(pre) > code:not(:where(.expressive-code *)) {
+	font-size: 0.9em;
+	border: 1px solid var(--sl-color-hairline);
+	border-radius: 0.25rem;
+}
+.expressive-code .frame .copy button { opacity: 1; }
+.expressive-code [data-copy-error] {
+	margin: 0;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--sl-color-gray-5);
+	background: var(--sl-color-bg);
+	color: var(--sl-color-text);
+	font: 0.875rem/1.7 var(--font-sans);
+}
+.sl-markdown-content :is(th, td) { min-width: 8rem; }
+@media (min-width: 50rem) {
+	.sl-markdown-content { font-size: 1.125rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
 	}
+	.expressive-code .copy :is(button, button div, .feedback) { transition: none; }
 }

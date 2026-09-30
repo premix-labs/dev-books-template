@@ -1,0 +1,9 @@
+---
+import DefaultSidebar from '@astrojs/starlight/components/Sidebar.astro';
+import { getNavigation } from '../lib/navigation';
+import { withBase } from '../lib/paths';
+---
+<nav aria-label="เมนูหลักบนมือถือ" class="border-b border-[var(--sl-color-gray-5)] pb-3 min-[50rem]:hidden">
+	{getNavigation(Astro.url.pathname).filter(item => item.href !== withBase('about')).map(item => <a href={item.href} aria-current={item.active ? 'page' : undefined} class="block rounded-md px-2 py-3 font-semibold text-[var(--sl-color-gray-2)] no-underline hover:text-[var(--sl-color-text-accent)]">{item.label}</a>)}
+</nav>
+<DefaultSidebar />

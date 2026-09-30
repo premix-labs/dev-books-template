@@ -1,0 +1,17 @@
+---
+import { book } from '../../book.config.mjs';
+import { getChapters } from '../lib/chapters';
+import { withBase } from '../lib/paths';
+const chapters = await getChapters();
+const id = Astro.locals.starlightRoute.id;
+const index = chapters.findIndex(chapter => chapter.id === id);
+const previous = index > 0 ? chapters[index - 1] : undefined;
+const next = index >= 0 ? chapters[index + 1] : undefined;
+---
+{id !== '' && <footer class="not-content mt-12">
+	{(previous || next) && <nav class="pagination-links grid gap-4 sm:grid-cols-2" aria-label="เปลี่ยนบท">
+		{previous && <a href={previous.href} rel="prev" class="min-w-0 break-words rounded-md border border-[var(--sl-color-gray-5)] p-4 text-[var(--sl-color-gray-3)] no-underline hover:border-[var(--sl-color-text-accent)]"><span>← บทก่อนหน้า</span><br /><strong class="text-[var(--sl-color-white)]">{previous.title}</strong></a>}
+		{next && <a href={next.href} rel="next" class="min-w-0 break-words rounded-md border border-[var(--sl-color-gray-5)] p-4 text-right text-[var(--sl-color-gray-3)] no-underline hover:border-[var(--sl-color-text-accent)] sm:col-start-2"><span>บทถัดไป →</span><br /><strong class="text-[var(--sl-color-white)]">{next.title}</strong></a>}
+	</nav>}
+	<div class="mt-8 flex flex-wrap justify-between gap-3 border-t border-[var(--sl-color-gray-5)] pt-5 text-sm text-[var(--sl-color-gray-3)]"><a href={`${withBase()}#books`}>กลับไปสารบัญ</a><span>{book.title} · {book.author}</span></div>
+</footer>}

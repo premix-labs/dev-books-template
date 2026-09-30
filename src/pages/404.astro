@@ -1,8 +1,9 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { withBase } from '../lib/paths';
 
 const frontmatter = {
-	title: '404',
+	title: 'ไม่พบหน้าที่ต้องการ',
 	description: 'ไม่พบหน้าที่คุณกำลังค้นหา',
 	template: 'splash' as const,
 	hero: {
@@ -12,7 +13,13 @@ const frontmatter = {
 	pagefind: false,
 	pagination: false,
 	editUrl: false as const,
+	head: [
+		{ tag: 'meta' as const, attrs: { name: 'robots', content: 'noindex' } },
+		{ tag: 'link' as const, attrs: { rel: 'canonical', href: new URL(`${withBase()}404.html`, Astro.site).href } },
+	],
 };
 ---
 
-<StarlightPage frontmatter={frontmatter} />
+<StarlightPage frontmatter={frontmatter}>
+	<p><a href={`${withBase()}#books`}>เปิดสารบัญ</a> หรือ <a href={withBase()}>กลับหน้าแรก</a> เพื่อเลือกบทเรียนใหม่</p>
+</StarlightPage>
