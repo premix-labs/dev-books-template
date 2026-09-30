@@ -1,9 +1,8 @@
 ---
 import DefaultHero from '@astrojs/starlight/components/Hero.astro';
-import { Code } from 'astro:components';
+import BookCover from './BookCover.astro';
 import { book } from '../../book.config.mjs';
 const isHomepage = Astro.locals.starlightRoute.id === '';
-const coverLines = book.cover.code.split(/\r\n|\r|\n/);
 ---
 {isHomepage ? (
 	<section class="home-hero not-content relative left-1/2 grid w-[calc(100vw-2*clamp(1.25rem,4vw,3rem))] max-w-[88rem] -translate-x-1/2 grid-cols-[minmax(0,0.95fr)_minmax(34rem,1.05fr)] items-center gap-[clamp(2.25rem,3.5vw,3.5rem)] pt-[clamp(3.5rem,5vw,4rem)] pb-[clamp(3rem,5vw,4rem)] max-[64rem]:grid-cols-1 max-[64rem]:gap-14 max-[40rem]:pt-10" aria-labelledby="_top">
@@ -14,25 +13,6 @@ const coverLines = book.cover.code.split(/\r\n|\r|\n/);
 				<span>เปิดสารบัญ</span><svg class="size-5 fill-none stroke-current" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 			</a>
 		</div>
-		<figure class="code-window m-0 grid min-h-[24.5rem] grid-cols-[10.25rem_minmax(0,1fr)] overflow-hidden rounded-[0.7rem] border border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg)] shadow-[0_1.2rem_4rem_rgb(18_32_62_/_7%)] max-[40rem]:min-h-[22rem] max-[40rem]:grid-cols-1">
-			<figcaption class="sr-only">โค้ดตัวอย่างใน {book.cover.fileName}</figcaption>
-			<div aria-hidden="true" class="flex flex-col border-r border-[var(--sl-color-gray-5)] bg-[color-mix(in_srgb,var(--sl-color-bg)_96%,var(--sl-color-accent)_4%)] py-[1.2rem] font-mono text-[0.76rem] text-[var(--sl-color-gray-2)] max-[40rem]:hidden">
-				<span class="px-4 pb-[0.9rem] text-[0.68rem] font-bold tracking-[0.04em]">EXPLORER</span>
-				<span class="flex items-center gap-2 px-4 py-[0.43rem]"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M1 4h5l2 2h7v8H1z" /></svg>your-book</span>
-				<span class="py-[0.43rem] pl-8">src</span>
-				<span class="truncate bg-[var(--sl-color-gray-6)] py-[0.43rem] pr-3 pl-8 text-[var(--sl-color-white)]">{book.cover.fileName}</span>
-				<span class="py-[0.43rem] pl-4">README.md</span>
-			</div>
-			<div class="grid min-w-0 grid-rows-[3.1rem_1fr_2.6rem]">
-				<div data-cover-file class="max-w-full min-w-0 w-fit truncate border-r border-b border-[var(--sl-color-gray-5)] px-4 py-[0.9rem] font-mono text-[0.78rem] text-[var(--sl-color-gray-2)]"><span aria-hidden="true" class="mr-3 font-bold text-[var(--sl-color-text-accent)]">&lt;/&gt;</span>{book.cover.fileName}</div>
-				<div class="book-cover-code max-h-96 overflow-auto py-[1.2rem] font-mono text-[clamp(0.72rem,1vw,0.84rem)] leading-7" role="region" tabindex="0" aria-label="โค้ดตัวอย่าง เลื่อนแนวนอนและแนวตั้งได้">
-					<div class="flex min-w-max">
-						<div data-cover-lines aria-hidden="true" class="sticky left-0 w-[3.3rem] shrink-0 bg-[var(--sl-color-bg)] pr-4 pl-4 text-[var(--sl-color-gray-3)] select-none">{coverLines.map((_, index) => <span class="block">{index + 1}</span>)}</div>
-						<Code code={book.cover.code} lang={book.cover.language} themes={{ light: 'github-light-default', dark: 'github-dark-default' }} defaultColor={false} wrap={null} />
-					</div>
-				</div>
-				<div class="flex min-w-0 items-center justify-end gap-5 border-t border-[var(--sl-color-gray-5)] px-4 font-mono text-[0.7rem] text-[var(--sl-color-gray-3)]"><span>อ่านอย่างเดียว</span><span>UTF-8</span><span class="truncate text-[var(--sl-color-text-accent)]">{book.cover.language}</span></div>
-			</div>
-		</figure>
+		<BookCover />
 	</section>
 ) : <DefaultHero {...Astro.props}><slot /></DefaultHero>}

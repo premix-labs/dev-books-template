@@ -1,0 +1,45 @@
+---
+import { Code } from 'astro:components';
+import { book } from '../../book.config.mjs';
+const lines = book.cover.code.split(/\r\n|\r|\n/);
+---
+
+<figure class="code-window m-0 min-w-0 overflow-hidden rounded-xl border border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg)] shadow-[0_16px_48px_-12px_rgb(0_0_0_/_18%)]">
+	<figcaption class="sr-only">ตัวอย่างหน้าต่าง IDE แสดงโค้ดใน {book.cover.fileName} อ่านอย่างเดียว</figcaption>
+	<div aria-hidden="true" class="grid h-10 grid-cols-[4.5rem_minmax(0,1fr)_4.5rem] items-center border-b border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] px-3 text-[0.7rem] text-[var(--sl-color-gray-2)]">
+		<div class="flex gap-1.5"><span class="size-2.5 rounded-full bg-[#e36965]"></span><span class="size-2.5 rounded-full bg-[#dca843]"></span><span class="size-2.5 rounded-full bg-[#4fa77a]"></span></div>
+		<span class="truncate text-center font-medium">{book.id}</span>
+		<svg class="justify-self-end" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M9 4v16" /></svg>
+	</div>
+	<div class="grid grid-cols-[2.75rem_8.5rem_minmax(0,1fr)] max-[40rem]:grid-cols-1">
+		<div aria-hidden="true" class="flex flex-col items-center border-r border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] text-[var(--sl-color-gray-3)] max-[40rem]:hidden">
+			<div class="flex h-12 w-full items-center justify-center border-l-2 border-[var(--sl-color-text-accent)] text-[var(--sl-color-text-accent)]"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3h8l4 4v14H8zM16 3v5h4M5 6H3v14h2" /></svg></div>
+			<svg class="my-3" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+			<svg class="my-3" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2" /><circle cx="18" cy="6" r="2" /><circle cx="6" cy="19" r="2" /><path d="M6 7v10M18 8v2a5 5 0 0 1-5 5H6" /></svg>
+			<svg class="mt-auto mb-4" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7" /><circle cx="12" cy="12" r="2.5" /><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2" /></svg>
+		</div>
+		<div aria-hidden="true" class="min-w-0 border-r border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-sidebar)] text-[0.72rem] text-[var(--sl-color-gray-2)] max-[40rem]:hidden">
+			<div class="flex h-10 items-center justify-between px-3 text-[0.62rem] tracking-wider"><span>EXPLORER</span><span class="text-base leading-none">···</span></div>
+			<div class="flex items-center gap-1.5 px-2 py-2 font-semibold"><svg class="shrink-0" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 6 5 5 5-5" /></svg><span class="truncate">{book.id}</span></div>
+			<div class="flex items-center gap-2 py-1.5 pl-5"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m2 6 4 4 4-4" /></svg><span>src</span></div>
+			<div class="flex items-center gap-2 border-l-2 border-[var(--sl-color-text-accent)] bg-[var(--sl-color-gray-6)] py-1.5 pr-2 pl-7 text-[var(--sl-color-white)]"><span class="font-mono text-[var(--sl-color-text-accent)]">&lt;/&gt;</span><span class="truncate">{book.cover.fileName}</span></div>
+			<div class="flex items-center gap-2 py-1.5 pl-5"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 2h7l3 3v9H3zM6 7h4M6 10h4" /></svg><span>README.md</span></div>
+		</div>
+		<div class="min-w-0">
+			<div class="flex h-10 min-w-0 border-b border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] font-mono text-[0.72rem]">
+				<div data-cover-file class="flex min-w-0 items-center gap-2 border-t-2 border-r border-t-[var(--sl-color-text-accent)] border-r-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg)] px-3 text-[var(--sl-color-white)]"><span aria-hidden="true" class="text-[var(--sl-color-text-accent)]">&lt;/&gt;</span><span class="truncate">{book.cover.fileName}</span><svg aria-hidden="true" class="ml-3 shrink-0 text-[var(--sl-color-gray-3)]" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m4 4 8 8M12 4l-8 8" /></svg></div>
+			</div>
+			<div aria-hidden="true" class="flex h-8 min-w-0 items-center gap-2 px-4 text-[0.68rem] text-[var(--sl-color-gray-3)]"><span>src</span><svg class="shrink-0" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3 5 5-5 5" /></svg><span class="truncate">{book.cover.fileName}</span></div>
+			<div class="book-cover-code min-h-72 max-h-96 overflow-auto pt-2 pb-5 font-mono text-[0.8rem] leading-7" role="region" tabindex="0" aria-label="โค้ดตัวอย่าง อ่านอย่างเดียว เลื่อนแนวนอนและแนวตั้งได้">
+				<div class="flex min-w-max">
+					<div data-cover-lines aria-hidden="true" class="sticky left-0 z-1 w-12 shrink-0 bg-[var(--sl-color-bg)] pr-4 pl-3 text-right text-[var(--sl-color-gray-3)] select-none">{lines.map((_, index) => <span class="block">{index + 1}</span>)}</div>
+					<Code code={book.cover.code} lang={book.cover.language} themes={{ light: 'github-light-default', dark: 'github-dark-default' }} defaultColor={false} wrap={null} />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="flex min-h-7 min-w-0 items-center justify-between gap-3 border-t border-[var(--sl-color-gray-5)] bg-[var(--sl-color-bg-nav)] px-3 font-mono text-[0.65rem] text-[var(--sl-color-gray-2)]">
+		<span class="flex shrink-0 items-center gap-1.5"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="7" width="10" height="7" rx="1" /><path d="M5 7V5a3 3 0 0 1 6 0v2" /></svg>อ่านอย่างเดียว</span>
+		<div class="flex min-w-0 items-center gap-4"><span class="shrink-0 max-[24rem]:hidden">{lines.length} lines</span><span class="shrink-0">UTF-8</span><span class="truncate text-[var(--sl-color-text-accent)]">{book.cover.language}</span></div>
+	</div>
+</figure>
