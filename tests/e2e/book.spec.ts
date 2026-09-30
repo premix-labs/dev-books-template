@@ -189,6 +189,26 @@ test('code stays readable with zoom-equivalent reflow and larger text', async ({
   await expect(page.locator('h1')).toBeVisible();
 });
 
+test('mobile copy buttons stay above code and terminal text', async ({ page }) => {
+  for (const width of [320,390]) {
+    await page.setViewportSize({ width, height:844 });
+    await ready(page,chapters[Math.min(1,chapters.length-1)]!.href);
+    const frames = page.locator('.expressive-code .frame');
+    expect(await frames.count()).toBeGreaterThan(0);
+    for (const frame of await frames.all()) {
+      const positions = await frame.evaluate(node => {
+        const header = node.querySelector('.header')!.getBoundingClientRect();
+        const button = node.querySelector('.copy button')!.getBoundingClientRect();
+        const code = node.querySelector('pre')!.getBoundingClientRect();
+        return { headerTop:header.top,buttonTop:button.top,buttonBottom:button.bottom,codeTop:code.top };
+      });
+      expect(positions.buttonTop).toBeGreaterThanOrEqual(positions.headerTop - 1);
+      expect(positions.buttonBottom).toBeLessThanOrEqual(positions.codeTop + 1);
+    }
+    await noOverflow(page);
+  }
+});
+
 test('only one mobile menu, Escape restores focus and search closes menu', async ({ page }) => {
   await page.setViewportSize({ width:390,height:844 });
   for (const route of ['./',chapters[0]!.href]) {

@@ -57,6 +57,38 @@
 	border-radius: 0.25rem;
 }
 .expressive-code .frame .copy button { opacity: 1; }
+@media (max-width: 49.99rem) {
+	.expressive-code .frame .header {
+		box-sizing: border-box;
+		min-block-size: 3rem;
+		padding-inline-end: 3.5rem;
+	}
+	.expressive-code .frame.has-title:not(.is-terminal) .header .title {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		min-block-size: 3rem;
+	}
+	.expressive-code .frame.is-terminal .header { padding-inline-start: 3.5rem; }
+	.expressive-code .frame .copy {
+		inset-block-start: 0.25rem;
+		inset-inline-end: 0.5rem;
+	}
+	@media (scripting: enabled) {
+		.expressive-code .frame:not(.has-title):not(.is-terminal) .header {
+			display: block;
+			background: var(--code-background);
+			border: var(--ec-borderWidth) solid var(--ec-borderColor);
+			border-bottom: 0;
+			border-radius: inherit;
+		}
+		.expressive-code .frame:not(.has-title):not(.is-terminal) :is(pre, code) {
+			border-top: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+}
 .expressive-code [data-copy-error] {
 	margin: 0;
 	padding: 0.75rem 1rem;
